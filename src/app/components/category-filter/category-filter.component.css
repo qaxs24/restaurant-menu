@@ -1,0 +1,25 @@
+.category-filter {
+  margin: 2rem 0;
+}
+
+.category-filter h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+mat-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+mat-chip {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+mat-chip:hover {
+  transform: scale(1.05);
+}
+

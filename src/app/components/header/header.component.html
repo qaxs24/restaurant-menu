@@ -1,0 +1,28 @@
+<mat-toolbar color="primary" class="header">
+  <div class="header-container">
+    <a routerLink="/" class="logo">
+      <mat-icon>restaurant</mat-icon>
+      <span>Figgio</span>
+    </a>
+
+    <nav class="nav-menu">
+      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Головна
+      </a>
+      <a mat-button routerLink="/menu" routerLinkActive="active">
+        Меню
+      </a>
+      <a mat-button routerLink="/about" routerLinkActive="active">
+        Про нас
+      </a>
+      <a mat-button routerLink="/contacts" routerLinkActive="active">
+        Контакти
+      </a>
+      <a mat-button routerLink="/cart" routerLinkActive="active" class="cart-button">
+        <mat-icon>shopping_cart</mat-icon>
+        Кошик
+      </a>
+    </nav>
+  </div>
+</mat-toolbar>
+

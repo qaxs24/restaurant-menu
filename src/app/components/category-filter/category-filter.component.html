@@ -1,0 +1,18 @@
+<div class="category-filter">
+  <h3>Категорії:</h3>
+  <mat-chip-set aria-label="Вибір категорії">
+    <mat-chip 
+      [highlighted]="isSelected(null)"
+      (click)="onCategoryClick(null)">
+      Всі
+    </mat-chip>
+    @for (category of categories; track category) {
+      <mat-chip 
+        [highlighted]="isSelected(category)"
+        (click)="onCategoryClick(category)">
+        {{ category }}
+      </mat-chip>
+    }
+  </mat-chip-set>
+</div>
+
