@@ -25,6 +25,19 @@
   font-size: 0.95rem;
 }
 
+.contact-group {
+  margin-top: 1rem;
+}
+
+.contact-group p {
+  margin: 0.3rem 0;
+}
+
+.contact-group p strong {
+  color: #fff;
+  font-size: 1rem;
+}
+
 .social-links {
   display: flex;
   gap: 1rem;
