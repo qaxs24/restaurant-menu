@@ -17,8 +17,10 @@
   margin-bottom: 2rem;
 }
 
-.menu-content {
-  padding: 2rem;
-  text-align: center;
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
 }
 
