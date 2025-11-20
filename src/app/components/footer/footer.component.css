@@ -50,7 +50,7 @@
 }
 
 .social-links a:hover {
-  color: #667eea;
+  color: var(--mat-sys-primary);
 }
 
 .social-links mat-icon {
