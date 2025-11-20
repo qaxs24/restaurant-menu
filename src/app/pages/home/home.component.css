@@ -1,42 +1,210 @@
 .home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 0;
 }
 
 .hero {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, var(--mat-sys-primary) 0%, var(--mat-sys-tertiary) 100%);
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/assets/hero-bg.jpg') no-repeat center center;
+  background-size: cover;
   color: white;
-  border-radius: 8px;
-  margin-bottom: 3rem;
+  padding: 5rem 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  animation: fadeIn 1s ease-out;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
   font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   opacity: 0.9;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cta-button {
+  padding: 1.5rem 2rem !important;
+  font-size: 1.1rem !important;
+}
+
+.secondary-cta {
+  color: white !important;
+  border-color: white !important;
+  padding: 0 2rem !important;
 }
 
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-mat-card {
+.feature-card {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 16px;
+  background: var(--mat-sys-surface-container-low);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.icon-wrapper mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--mat-sys-on-surface);
+}
+
+.feature-card p {
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.6;
+}
+
+.categories-preview {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  box-sizing: border-box;
   text-align: center;
 }
 
-mat-card-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.categories-preview h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--mat-sys-on-surface);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.category-card {
+  cursor: pointer;
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  transform: scale(1.02);
+}
+
+.category-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.category-card h3 {
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.reservation-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/assets/reservation-bg.jpg') no-repeat center center;
+  background-size: cover;
+  color: white;
+  padding: 8rem 2rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+  margin-top: 4rem;
+}
+
+.reservation-content {
+  max-width: 800px;
+  width: 100%;
+}
+
+.reservation-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.reservation-content p {
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.reservation-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .hero h1, .reservation-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-actions, .reservation-actions {
+    flex-direction: column;
+  }
+  
+  .cta-button, .secondary-cta {
+    width: 100%;
+  }
 }
 
