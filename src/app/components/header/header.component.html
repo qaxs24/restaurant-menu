@@ -1,30 +1,74 @@
-<mat-toolbar color="primary" class="header">
+<header class="header">
   <div class="header-container">
-    <a routerLink="/" class="logo">
+    <a routerLink="/" class="logo" (click)="closeMobileMenu()">
       <img src="assets/header-logo.png" alt="Figgio Logo">
+      <span class="logo-text">Figgio</span>
     </a>
 
-    <nav class="nav-menu">
-      <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <nav class="nav-menu desktop-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
         Головна
       </a>
-      <a mat-button routerLink="/menu" routerLinkActive="active">
+      <a routerLink="/menu" routerLinkActive="active" class="nav-link">
         Меню
       </a>
-      <a mat-button routerLink="/about" routerLinkActive="active">
+      <a routerLink="/about" routerLinkActive="active" class="nav-link">
         Про нас
       </a>
-      <a mat-button routerLink="/contacts" routerLinkActive="active">
+      <a routerLink="/contacts" routerLinkActive="active" class="nav-link">
         Контакти
       </a>
-      <a mat-button routerLink="/cart" routerLinkActive="active" class="cart-button">
-        <mat-icon [matBadge]="cartService.totalItems()" 
-                  [matBadgeHidden]="cartService.totalItems() === 0"
-                  matBadgeColor="accent"
-                  matBadgeSize="small">shopping_cart</mat-icon>
+    </nav>
+
+    <a routerLink="/cart" class="cart-btn" (click)="closeMobileMenu()">
+      <mat-icon [matBadge]="cartService.totalItems()" 
+                [matBadgeHidden]="cartService.totalItems() === 0"
+                matBadgeSize="small">shopping_cart</mat-icon>
+      <span class="cart-text">
+        @if (cartService.totalItems() > 0) {
+          {{ cartService.totalPrice() }} грн
+        } @else {
+          Кошик
+        }
+      </span>
+    </a>
+
+    <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+      <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+
+  @if (mobileMenuOpen()) {
+    <nav class="mobile-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" 
+         class="mobile-nav-link" (click)="closeMobileMenu()">
+        <mat-icon>home</mat-icon>
+        Головна
+      </a>
+      <a routerLink="/menu" routerLinkActive="active" 
+         class="mobile-nav-link" (click)="closeMobileMenu()">
+        <mat-icon>restaurant_menu</mat-icon>
+        Меню
+      </a>
+      <a routerLink="/about" routerLinkActive="active" 
+         class="mobile-nav-link" (click)="closeMobileMenu()">
+        <mat-icon>info</mat-icon>
+        Про нас
+      </a>
+      <a routerLink="/contacts" routerLinkActive="active" 
+         class="mobile-nav-link" (click)="closeMobileMenu()">
+        <mat-icon>phone</mat-icon>
+        Контакти
+      </a>
+      <a routerLink="/cart" routerLinkActive="active" 
+         class="mobile-nav-link cart-mobile" (click)="closeMobileMenu()">
+        <mat-icon>shopping_cart</mat-icon>
         Кошик
+        @if (cartService.totalItems() > 0) {
+          <span class="mobile-cart-badge">{{ cartService.totalItems() }}</span>
+        }
       </a>
     </nav>
-  </div>
-</mat-toolbar>
+  }
+</header>
 
