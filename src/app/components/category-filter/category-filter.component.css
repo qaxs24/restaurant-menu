@@ -1,25 +1,60 @@
-.category-filter {
-  margin: 2rem 0;
-}
-
-.category-filter h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-mat-chip-set {
+.category-nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
-mat-chip {
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #555;
+  text-align: left;
+  width: 100%;
 }
 
-mat-chip:hover {
-  transform: scale(1.05);
+.category-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--mat-sys-primary);
+}
+
+.category-item.active {
+  background: var(--mat-sys-primary);
+  color: white;
+}
+
+.category-item.active:hover {
+  background: var(--mat-sys-primary);
+}
+
+.category-item mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.category-item span {
+  font-weight: 500;
+}
+
+/* Mobile horizontal scroll */
+@media (max-width: 900px) {
+  .category-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .category-item {
+    width: auto;
+    padding: 0.5rem 1rem;
+  }
 }
 

@@ -1,18 +1,19 @@
-<div class="category-filter">
-  <h3>Категорії:</h3>
-  <mat-chip-set aria-label="Вибір категорії">
-    <mat-chip 
-      [highlighted]="isSelected(null)"
-      (click)="onCategoryClick(null)">
-      Всі
-    </mat-chip>
-    @for (category of categories; track category) {
-      <mat-chip 
-        [highlighted]="isSelected(category)"
-        (click)="onCategoryClick(category)">
-        {{ category }}
-      </mat-chip>
-    }
-  </mat-chip-set>
-</div>
+<nav class="category-nav">
+  <button 
+    class="category-item"
+    [class.active]="isSelected(null)"
+    (click)="onCategoryClick(null)">
+    <mat-icon>restaurant_menu</mat-icon>
+    <span>Всі страви</span>
+  </button>
+  @for (category of categories; track category) {
+    <button 
+      class="category-item"
+      [class.active]="isSelected(category)"
+      (click)="onCategoryClick(category)">
+      <mat-icon>{{ getCategoryIcon(category) }}</mat-icon>
+      <span>{{ category }}</span>
+    </button>
+  }
+</nav>
 

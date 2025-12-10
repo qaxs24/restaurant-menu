@@ -18,5 +18,10 @@ export class MenuItemCardComponent {
   onAddToCart(): void {
     this.addToCart.emit(this.item);
   }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://placehold.co/400x300/f5f5f5/999?text=No+Image';
+  }
 }
 

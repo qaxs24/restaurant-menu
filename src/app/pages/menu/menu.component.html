@@ -1,37 +1,54 @@
-<div class="menu-container">
-  <h1>Наше меню</h1>
-  
-  <div class="menu-controls">
-    <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Пошук страви</mat-label>
-      <input matInput 
-             [ngModel]="searchQuery()" 
-             (ngModelChange)="onSearchChange($event)" 
-             placeholder="Введіть назву страви...">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+<div class="menu-page">
+  <div class="menu-layout">
+    <aside class="categories-sidebar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Пошук страви</mat-label>
+        <input matInput 
+               [ngModel]="searchQuery()" 
+               (ngModelChange)="onSearchChange($event)" 
+               placeholder="Введіть назву...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
 
-    <app-category-filter
-      [categories]="categories()"
-      [selectedCategory]="selectedCategory()"
-      (categorySelected)="onCategorySelected($event)">
-    </app-category-filter>
-  </div>
+      <h3>Категорії</h3>
+      <app-category-filter
+        [categories]="categories()"
+        [selectedCategory]="selectedCategory()"
+        (categorySelected)="onCategorySelected($event)">
+      </app-category-filter>
+    </aside>
 
-  @if (filteredItems().length === 0) {
-    <div class="no-results">
-      <mat-icon>search_off</mat-icon>
-      <p>Страв не знайдено</p>
-    </div>
-  } @else {
-    <div class="menu-grid">
-      @for (item of filteredItems(); track item.id) {
-        <app-menu-item-card 
-          [item]="item" 
-          (addToCart)="onAddToCart($event)">
-        </app-menu-item-card>
+    <main class="menu-content">
+      @if (filteredItems().length === 0) {
+        <div class="no-results">
+          <mat-icon>search_off</mat-icon>
+          <p>Страв не знайдено</p>
+          <button mat-stroked-button color="primary" (click)="onCategorySelected(null); onSearchChange('')">
+            Скинути фільтри
+          </button>
+        </div>
+      } @else {
+        <div class="results-info">
+          <span class="results-count">Знайдено: {{ filteredItems().length }} страв</span>
+          @if (selectedCategory()) {
+            <span class="active-filter">
+              {{ selectedCategory() }}
+              <button mat-icon-button (click)="onCategorySelected(null)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </span>
+          }
+        </div>
+        <div class="menu-grid">
+          @for (item of filteredItems(); track item.id) {
+            <app-menu-item-card 
+              [item]="item" 
+              (addToCart)="onAddToCart($event)">
+            </app-menu-item-card>
+          }
+        </div>
       }
-    </div>
-  }
+    </main>
+  </div>
 </div>
 
