@@ -1,18 +1,76 @@
 <div class="cart-container">
   <h1>Кошик</h1>
 
-  <div class="cart-content">
-    <mat-card>
-      <mat-card-content>
-        <p class="empty-cart">Ваш кошик поки що порожній</p>
-        <p class="empty-cart-subtitle">Додайте страви з меню, щоб зробити замовлення</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" [routerLink]="['/menu']">
-          До меню
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+  @if (cartService.items().length === 0) {
+    <div class="cart-content">
+      <mat-card>
+        <mat-card-content>
+          <p class="empty-cart">Ваш кошик поки що порожній</p>
+          <p class="empty-cart-subtitle">Додайте страви з меню, щоб зробити замовлення</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="['/menu']">
+            До меню
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  } @else {
+    <div class="cart-items">
+      @for (item of cartService.items(); track item.id) {
+        <mat-card class="cart-item">
+          <div class="cart-item-content">
+            @if (item.imageUrl) {
+              <img [src]="item.imageUrl" [alt]="item.name" class="cart-item-image">
+            }
+            <div class="cart-item-details">
+              <h3>{{ item.name }}</h3>
+              <p class="item-price">{{ item.price }} грн</p>
+            </div>
+            <div class="cart-item-quantity">
+              <button mat-icon-button color="primary" (click)="cartService.decrementQuantity(item.id)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button mat-icon-button color="primary" (click)="cartService.incrementQuantity(item.id)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div class="cart-item-total">
+              <span>{{ item.price * item.quantity }} грн</span>
+            </div>
+            <button mat-icon-button color="warn" (click)="cartService.removeFromCart(item.id)" class="remove-btn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      }
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="cart-summary">
+      <mat-card>
+        <mat-card-content>
+          <div class="summary-row">
+            <span>Кількість позицій:</span>
+            <span>{{ cartService.totalItems() }}</span>
+          </div>
+          <div class="summary-row total">
+            <span>Загальна сума:</span>
+            <span class="total-price">{{ cartService.totalPrice() }} грн</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="warn" (click)="cartService.clearCart()">
+            Очистити кошик
+          </button>
+          <button mat-raised-button color="primary">
+            Оформити замовлення
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
 </div>
 

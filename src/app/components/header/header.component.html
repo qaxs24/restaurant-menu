@@ -18,7 +18,10 @@
         Контакти
       </a>
       <a mat-button routerLink="/cart" routerLinkActive="active" class="cart-button">
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon [matBadge]="cartService.totalItems()" 
+                  [matBadgeHidden]="cartService.totalItems() === 0"
+                  matBadgeColor="accent"
+                  matBadgeSize="small">shopping_cart</mat-icon>
         Кошик
       </a>
     </nav>

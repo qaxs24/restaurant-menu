@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem } from '../../models/menu-item.model';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-menu',
@@ -61,9 +62,10 @@ export class MenuComponent {
     }
   ];
 
+  private cartService = inject(CartService);
+
   onAddToCart(item: MenuItem): void {
-    console.log('Added to cart:', item);
-    // Тут буде логіка додавання в кошик
+    this.cartService.addToCart(item);
   }
 }
 
