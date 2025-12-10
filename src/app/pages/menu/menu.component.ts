@@ -1,6 +1,7 @@
-import { Component, inject, computed, signal } from '@angular/core';
+import { Component, inject, computed, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { MenuItem } from '../../models/menu-item.model';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
 import { CategoryFilterComponent } from '../../components/category-filter/category-filter.component';
@@ -25,7 +26,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
+  private route = inject(ActivatedRoute);
   menuItems: MenuItem[] = [
     {
       id: 1,
@@ -87,6 +89,15 @@ export class MenuComponent {
     const cats = [...new Set(this.menuItems.map(item => item.category))];
     return cats.sort();
   });
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const category = params['category'];
+      if (category) {
+        this.selectedCategory.set(category);
+      }
+    });
+  }
 
   filteredItems = computed(() => {
     let items = this.menuItems;
