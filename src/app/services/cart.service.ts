@@ -1,11 +1,37 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 import { MenuItem, CartItem } from '../models/menu-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems = signal<CartItem[]>([]);
+  private readonly STORAGE_KEY = 'restaurant_cart';
+  private cartItems = signal<CartItem[]>(this.loadFromStorage());
+
+  constructor() {
+    effect(() => {
+      this.saveToStorage(this.cartItems());
+    });
+  }
+
+  private loadFromStorage(): CartItem[] {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private saveToStorage(items: CartItem[]): void {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      // Ignore storage errors
+    }
+  }
 
   readonly items = this.cartItems.asReadonly();
   

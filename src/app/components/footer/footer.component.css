@@ -40,17 +40,26 @@
 
 .social-links {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
 .social-links a {
   color: white;
   transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
 }
 
 .social-links a:hover {
   color: var(--mat-sys-primary);
+}
+
+.social-links a span {
+  font-size: 0.95rem;
 }
 
 .social-links mat-icon {

@@ -1,12 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MenuItem } from '../../models/menu-item.model';
 import { MenuItemCardComponent } from '../../components/menu-item-card/menu-item-card.component';
+import { CategoryFilterComponent } from '../../components/category-filter/category-filter.component';
 import { CartService } from '../../services/cart.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule, MenuItemCardComponent],
+  imports: [
+    CommonModule, 
+    FormsModule,
+    MenuItemCardComponent, 
+    CategoryFilterComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSnackBarModule
+  ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
@@ -63,9 +78,50 @@ export class MenuComponent {
   ];
 
   private cartService = inject(CartService);
+  private snackBar = inject(MatSnackBar);
+
+  searchQuery = signal('');
+  selectedCategory = signal<string | null>(null);
+
+  categories = computed(() => {
+    const cats = [...new Set(this.menuItems.map(item => item.category))];
+    return cats.sort();
+  });
+
+  filteredItems = computed(() => {
+    let items = this.menuItems;
+    
+    const category = this.selectedCategory();
+    if (category) {
+      items = items.filter(item => item.category === category);
+    }
+    
+    const query = this.searchQuery().toLowerCase().trim();
+    if (query) {
+      items = items.filter(item => 
+        item.name.toLowerCase().includes(query) ||
+        item.description.toLowerCase().includes(query)
+      );
+    }
+    
+    return items;
+  });
+
+  onCategorySelected(category: string | null): void {
+    this.selectedCategory.set(category);
+  }
+
+  onSearchChange(query: string): void {
+    this.searchQuery.set(query);
+  }
 
   onAddToCart(item: MenuItem): void {
     this.cartService.addToCart(item);
+    this.snackBar.open(`${item.name} додано до кошика`, 'Ок', {
+      duration: 2000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 }
 

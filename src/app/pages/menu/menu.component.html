@@ -1,12 +1,37 @@
 <div class="menu-container">
   <h1>Наше меню</h1>
-  <div class="menu-grid">
-    @for (item of menuItems; track item.id) {
-      <app-menu-item-card 
-        [item]="item" 
-        (addToCart)="onAddToCart($event)">
-      </app-menu-item-card>
-    }
+  
+  <div class="menu-controls">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Пошук страви</mat-label>
+      <input matInput 
+             [ngModel]="searchQuery()" 
+             (ngModelChange)="onSearchChange($event)" 
+             placeholder="Введіть назву страви...">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <app-category-filter
+      [categories]="categories()"
+      [selectedCategory]="selectedCategory()"
+      (categorySelected)="onCategorySelected($event)">
+    </app-category-filter>
   </div>
+
+  @if (filteredItems().length === 0) {
+    <div class="no-results">
+      <mat-icon>search_off</mat-icon>
+      <p>Страв не знайдено</p>
+    </div>
+  } @else {
+    <div class="menu-grid">
+      @for (item of filteredItems(); track item.id) {
+        <app-menu-item-card 
+          [item]="item" 
+          (addToCart)="onAddToCart($event)">
+        </app-menu-item-card>
+      }
+    </div>
+  }
 </div>
 

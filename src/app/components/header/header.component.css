@@ -30,7 +30,7 @@
 .logo img {
   height: 50px;
   width: auto;
-  filter: brightness(0) invert(1); /* Make logo white if it's not already */
+  filter: brightness(0) invert(1);
 }
 
 .nav-menu {
@@ -62,5 +62,11 @@
   width: 1.3rem;
   height: 1.3rem;
   color: white !important;
+}
+
+.cart-button ::ng-deep .mat-badge-content {
+  background-color: white !important;
+  color: #d32f2f !important;
+  font-weight: 600;
 }
 

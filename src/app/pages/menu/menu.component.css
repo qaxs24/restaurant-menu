@@ -17,6 +17,36 @@
   margin-bottom: 2rem;
 }
 
+.menu-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.no-results mat-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+.no-results p {
+  font-size: 1.2rem;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
