@@ -1,0 +1,146 @@
+<div class="booking-container">
+  <div class="booking-header">
+    <h1>Бронювання столика</h1>
+    <p class="subtitle">Забронюйте столик онлайн — ми зателефонуємо для підтвердження</p>
+  </div>
+
+  @if (isSubmitted()) {
+    <mat-card class="success-card">
+      <mat-card-content>
+        <div class="success-content">
+          <mat-icon class="success-icon">check_circle</mat-icon>
+          <h2>Дякуємо за бронювання!</h2>
+          <p>Ми отримали вашу заявку і зв'яжемося з вами найближчим часом для підтвердження.</p>
+          <button mat-raised-button color="primary" (click)="resetForm()">
+            Нове бронювання
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="booking-content">
+      <mat-card class="booking-form-card">
+        <mat-card-content>
+          <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Ваше ім'я</mat-label>
+                <input matInput formControlName="name" placeholder="Введіть ваше ім'я">
+                <mat-icon matPrefix>person</mat-icon>
+                @if (bookingForm.get('name')?.hasError('required') && bookingForm.get('name')?.touched) {
+                  <mat-error>Ім'я обов'язкове</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row two-columns">
+              <mat-form-field appearance="outline">
+                <mat-label>Телефон</mat-label>
+                <input matInput formControlName="phone" placeholder="+380 XX XXX XX XX">
+                <mat-icon matPrefix>phone</mat-icon>
+                @if (bookingForm.get('phone')?.hasError('required') && bookingForm.get('phone')?.touched) {
+                  <mat-error>Телефон обов'язковий</mat-error>
+                }
+                @if (bookingForm.get('phone')?.hasError('pattern') && bookingForm.get('phone')?.touched) {
+                  <mat-error>Невірний формат</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Email (необов'язково)</mat-label>
+                <input matInput formControlName="email" placeholder="email@example.com">
+                <mat-icon matPrefix>email</mat-icon>
+                @if (bookingForm.get('email')?.hasError('email') && bookingForm.get('email')?.touched) {
+                  <mat-error>Невірний email</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row three-columns">
+              <mat-form-field appearance="outline">
+                <mat-label>Дата</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date" 
+                       [min]="minDate" [max]="maxDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                @if (bookingForm.get('date')?.hasError('required') && bookingForm.get('date')?.touched) {
+                  <mat-error>Оберіть дату</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Час</mat-label>
+                <mat-select formControlName="time">
+                  @for (slot of timeSlots; track slot) {
+                    <mat-option [value]="slot">{{ slot }}</mat-option>
+                  }
+                </mat-select>
+                <mat-icon matPrefix>schedule</mat-icon>
+                @if (bookingForm.get('time')?.hasError('required') && bookingForm.get('time')?.touched) {
+                  <mat-error>Оберіть час</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Гостей</mat-label>
+                <mat-select formControlName="guests">
+                  @for (num of guestOptions; track num) {
+                    <mat-option [value]="num">{{ num }} {{ num === 1 ? 'гість' : num < 5 ? 'гості' : 'гостей' }}</mat-option>
+                  }
+                </mat-select>
+                <mat-icon matPrefix>groups</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Побажання (необов'язково)</mat-label>
+                <textarea matInput formControlName="comments" rows="3" 
+                          placeholder="Особливі побажання, святкування тощо"></textarea>
+                <mat-icon matPrefix>comment</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <button mat-raised-button color="primary" type="submit" 
+                    class="submit-btn" [disabled]="isSubmitting()">
+              @if (isSubmitting()) {
+                <span>Відправляємо...</span>
+              } @else {
+                <mat-icon>event_available</mat-icon>
+                <span>Забронювати</span>
+              }
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="booking-info">
+        <mat-card class="info-card">
+          <mat-card-content>
+            <mat-icon class="info-icon">schedule</mat-icon>
+            <h3>Графік роботи</h3>
+            <p>Пн-Чт: 11:00 - 22:00</p>
+            <p>Пт-Нд: 11:00 - 23:00</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <mat-card-content>
+            <mat-icon class="info-icon">info</mat-icon>
+            <h3>Важливо знати</h3>
+            <p>Бронювання підтверджується дзвінком</p>
+            <p>Столик тримається 15 хвилин</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <mat-card-content>
+            <mat-icon class="info-icon">phone</mat-icon>
+            <h3>Або зателефонуйте</h3>
+            <p class="phone-number">+380 44 123 45 67</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  }
+</div>
