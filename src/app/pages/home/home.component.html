@@ -1,85 +1,170 @@
 <div class="home-container">
   <section class="hero">
     <div class="hero-content">
+      <span class="hero-badge">Ресторан італійської та української кухні</span>
       <h1>Смак, який ви запам'ятаєте</h1>
-      <p class="hero-subtitle">Авторська кухня, свіжі інгредієнти та незабутня атмосфера.</p>
+      <p class="hero-subtitle">Авторські страви від шеф-кухаря, свіжі фермерські продукти та затишна атмосфера у серці міста</p>
       <div class="hero-actions">
         <button mat-raised-button color="primary" routerLink="/menu" class="cta-button">
           <mat-icon>restaurant_menu</mat-icon>
           Переглянути меню
         </button>
-        <button mat-stroked-button class="secondary-cta" routerLink="/about">
-          Про нас
+        <button mat-raised-button class="secondary-cta" routerLink="/booking">
+          <mat-icon>event_seat</mat-icon>
+          Забронювати
         </button>
       </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-number">7+</span>
+          <span class="hero-stat-label">років досвіду</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">50+</span>
+          <span class="hero-stat-label">страв у меню</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">15K+</span>
+          <span class="hero-stat-label">клієнтів</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="features">
-    <div class="feature-card">
-      <div class="icon-wrapper">
-        <mat-icon>eco</mat-icon>
+  <section class="why-us">
+    <div class="why-us-grid">
+      <div class="why-us-item">
+        <div class="why-us-icon">
+          <mat-icon>eco</mat-icon>
+        </div>
+        <div class="why-us-text">
+          <h3>Свіжі продукти</h3>
+          <p>Щоденні поставки від локальних фермерів</p>
+        </div>
       </div>
-      <h3>Свіжі продукти</h3>
-      <p>Ми використовуємо тільки найсвіжіші фермерські продукти для приготування наших страв.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-wrapper">
-        <mat-icon>local_shipping</mat-icon>
+      <div class="why-us-item">
+        <div class="why-us-icon">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="why-us-text">
+          <h3>Доставка за 30 хв</h3>
+          <p>Безкоштовно від 500 грн</p>
+        </div>
       </div>
-      <h3>Швидка доставка</h3>
-      <p>Гарячі страви у вас вдома за 30 хвилин. Безкоштовна доставка від 500 грн.</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="icon-wrapper">
-        <mat-icon>favorite</mat-icon>
+      <div class="why-us-item">
+        <div class="why-us-icon">
+          <mat-icon>workspace_premium</mat-icon>
+        </div>
+        <div class="why-us-text">
+          <h3>Авторська кухня</h3>
+          <p>Унікальні рецепти шеф-кухаря</p>
+        </div>
       </div>
-      <h3>Зроблено з любов'ю</h3>
-      <p>Наші шеф-кухарі вкладають душу в кожну страву, щоб ви отримали максимум задоволення.</p>
+      <div class="why-us-item">
+        <div class="why-us-icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="why-us-text">
+          <h3>З любов'ю</h3>
+          <p>Готуємо як для своїх</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="categories-preview">
-    <h2>Популярні категорії</h2>
-    <div class="category-grid">
-      <mat-card class="category-card" [routerLink]="['/menu']" [queryParams]="{category: 'Салати'}">
-        <img mat-card-image src="assets/salad.jpg" alt="Салати" onerror="this.src='https://placehold.co/600x400?text=Salads'">
-        <mat-card-content>
-          <h3>Салати</h3>
-        </mat-card-content>
-      </mat-card>
-      
-      <mat-card class="category-card" [routerLink]="['/menu']" [queryParams]="{category: 'Десерти'}">
-        <img mat-card-image src="assets/dessert.jpg" alt="Десерти" onerror="this.src='https://placehold.co/600x400?text=Desserts'">
-        <mat-card-content>
-          <h3>Десерти</h3>
-        </mat-card-content>
-      </mat-card>
+  <section class="popular-section">
+    <div class="section-header">
+      <h2>Популярні страви</h2>
+      <p>Хіти, які обирають наші гості</p>
+    </div>
+    <div class="dishes-grid">
+      @for (dish of popularDishes; track dish.id) {
+        <div class="dish-card">
+          <div class="dish-image-wrapper">
+            <img [src]="dish.imageUrl" [alt]="dish.name">
+            <div class="dish-overlay">
+              <button mat-fab color="primary" (click)="addToCart(dish)" class="add-to-cart-fab">
+                <mat-icon>add_shopping_cart</mat-icon>
+              </button>
+            </div>
+            <span class="dish-category">{{ dish.category }}</span>
+          </div>
+          <div class="dish-info">
+            <h3>{{ dish.name }}</h3>
+            <p>{{ dish.description }}</p>
+            <div class="dish-price">{{ dish.price }} <span>грн</span></div>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="section-footer">
+      <button mat-raised-button color="primary" routerLink="/menu" class="view-menu-btn">
+        Дивитись все меню
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </section>
 
-      <mat-card class="category-card" [routerLink]="['/menu']" [queryParams]="{category: 'Напої'}">
-        <img mat-card-image src="assets/drinks.jpg" alt="Напої" onerror="this.src='https://placehold.co/600x400?text=Drinks'">
-        <mat-card-content>
-          <h3>Напої</h3>
-        </mat-card-content>
-      </mat-card>
+  <section class="about-section">
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" alt="Інтер'єр ресторану">
+        <div class="about-image-accent"></div>
+      </div>
+      <div class="about-content">
+        <span class="section-tag">Про нас</span>
+        <h2>Figgio — смак традицій</h2>
+        <p>
+          Ми поєднуємо найкращі рецепти української та італійської кухні, 
+          використовуючи лише свіжі локальні продукти від перевірених фермерів.
+        </p>
+        <p>
+          З 2018 року даруємо гостям незабутні гастрономічні враження 
+          у затишній атмосфері, а тепер доставляємо улюблені страви прямо до вашого дому.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <mat-icon>check_circle</mat-icon>
+            <span>Фермерські продукти</span>
+          </div>
+          <div class="about-feature">
+            <mat-icon>check_circle</mat-icon>
+            <span>Авторські рецепти</span>
+          </div>
+          <div class="about-feature">
+            <mat-icon>check_circle</mat-icon>
+            <span>Сімейна атмосфера</span>
+          </div>
+          <div class="about-feature">
+            <mat-icon>check_circle</mat-icon>
+            <span>Швидка доставка</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Готові спробувати?</h2>
+      <p>Замовте онлайн з доставкою або забронюйте столик у ресторані</p>
+      <div class="cta-actions">
+        <button mat-raised-button class="cta-primary" routerLink="/menu">
+          <mat-icon>shopping_bag</mat-icon>
+          Замовити доставку
+        </button>
+        <button mat-raised-button class="cta-secondary" routerLink="/booking">
+          <mat-icon>event_seat</mat-icon>
+          Забронювати столик
+        </button>
+      </div>
+      <div class="cta-contact">
+        <mat-icon>phone</mat-icon>
+        <span>Або зателефонуйте: <strong>+380 44 123 45 67</strong></span>
+      </div>
     </div>
   </section>
 </div>
-
-<section class="reservation-section">
-  <div class="reservation-content">
-    <h2>Забронюйте найкращий столик</h2>
-    <p>Плануєте романтичну вечерю чи зустріч з друзями? Ми подбаємо про ваш комфорт.</p>
-    <div class="reservation-actions">
-      <button mat-raised-button color="primary" size="large" class="cta-button">
-        Забронювати столик
-      </button>
-      <button mat-stroked-button class="secondary-cta" routerLink="/menu">
-        Замовити доставку
-      </button>
-    </div>
-  </div>
-</section>
 
